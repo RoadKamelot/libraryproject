@@ -7,7 +7,7 @@ body {
 }
 #bodybg{
 /* Location of the image background="./pictures/hplibrary1.jpg"*/
-  background-image: url(./pictures/hplibrary1.jpg);
+  /*background-image: url(./pictures/hplibrary1.jpg);*/
   
   /* Background image is centered vertically and horizontally at all times */
   background-position: center center;
@@ -27,6 +27,9 @@ body {
      while the background image is loading */
   background-color: #464646;
 
+}
+#button-center{
+  margin: 0 auto;
 }
 .container {
     padding: 10px;
@@ -51,6 +54,7 @@ h4 {
  border-bottom-width:1px;
  padding-bottom:10px;
  text-align: center;
+
 }
 
 .form-control {
@@ -63,8 +67,9 @@ h4 {
 .centered-form{
     margin-top: 60px;
 }
-
-.centered-form .panel{
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+.panel-general{
+  margin: 0 auto;
+  padding: 30px;
+  background: rgba(128, 0, 128, 0.3);;
+  box-shadow: rgba(0, 0, 0, 0.6) 20px 20px 20px;
 }

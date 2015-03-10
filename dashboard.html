@@ -1,0 +1,94 @@
+<!DOCTYPE>
+<html>
+<head>
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js">
+    <link rel="stylesheet" type="text/css" href='main.css'>
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <script type='text/javascript' src='https://code.jquery.com/jquery-2.1.3.min.js'></script>
+	
+
+	<!-- Start WOWSlider.com HEAD section --> <!-- add to the <head> of your page -->
+	<link rel="stylesheet" type="text/css" href="engine0/style.css" />
+	<!--script type="text/javascript" src="engine0/jquery.js"></script-->
+	<!-- End WOWSlider.com HEAD section --></head>
+<body>
+	<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li id="dclist" class="active"><a href="#"> DC books <span class="glyphicon glyphicon-book" aria-hidden="true"></span> </a></li> 
+        <li> <span class="glyphicon glyphicon-option-vertical"> </span>  </li>
+        <li id="marvellist" class="active"><a href="#"> Marvel books <span class="glyphicon glyphicon-book" aria-hidden="true"></span></a></li> 
+        <li>  <span class="glyphicon glyphicon-option-vertical"> </span>  </li>
+        <li id="marvellist" class="active"><a href="#"> Manga <span class="glyphicon glyphicon-book" aria-hidden="true"></span></a></li> 
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li id="cart" class="active"><a href="#">Cart .<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> </a></li>
+        <li><span class="glyphicon glyphicon-option-vertical"> </span></li>
+        <li id="logout" class="active"><a href="#">Logout .<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> </a></li>
+      </ul>
+      
+    </div><!-- /.navbar-collapse -->
+  </div>
+
+	<!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
+	<div id="wowslider-container0">
+	<div class="ws_images"><ul>
+		<li><img src="data0/images/batman.jpg" alt="Gotham" title="Gotham" id="wows0_0"/></li>
+		<li><img src="data0/images/leona1.jpg" alt="Dawn of new age" title="Dawn of new age" id="wows0_1"/></li>
+		<li><img src="data0/images/supermanslide1.jpg" alt="Superman" title="Superman" id="wows0_2"/></li>
+		<li><img src="data0/images/deathnote.jpg" alt="deathnote" title="deathnote" id="wows0_3"/></li>
+		<li><img src="data0/images/arrowcw.jpg" alt="CWTV - Arrow 3/18" title="CWTV - Arrow 3/18" id="wows0_4"/></li>
+		<li><a href="http://wowslider.com"><img src="data0/images/avenger.jpg" alt="bootstrap slider" title="Avenger" id="wows0_5"/></a></li>
+		<li><img src="data0/images/hogwart2.jpg" alt="Hogwart" title="Hogwart" id="wows0_6"/></li>
+	</ul></div>
+	<div class="ws_bullets"><div>
+		<a href="#" title="Gotham"><span><img src="data0/tooltips/batman.jpg" alt="Gotham"/>1</span></a>
+		<a href="#" title="Dawn of new age"><span><img src="data0/tooltips/leona1.jpg" alt="Dawn of new age"/>2</span></a>
+		<a href="#" title="Superman"><span><img src="data0/tooltips/supermanslide1.jpg" alt="Superman"/>3</span></a>
+		<a href="#" title="deathnote"><span><img src="data0/tooltips/deathnote.jpg" alt="deathnote"/>4</span></a>
+		<a href="#" title="CWTV - Arrow 3/18"><span><img src="data0/tooltips/arrowcw.jpg" alt="CWTV - Arrow 3/18"/>5</span></a>
+		<a href="#" title="Avenger"><span><img src="data0/tooltips/avenger.jpg" alt="Avenger"/>6</span></a>
+		<a href="#" title="Hogwart"><span><img src="data0/tooltips/hogwart2.jpg" alt="Hogwart"/>7</span></a>
+	</div></div><div class="ws_script" style="position:absolute;left:-99%"><a href="http://wowslider.com">jquery gallery</a> by WOWSlider.com v7.7</div>
+	<div class="ws_shadow"></div>
+	</div>	
+	<script type="text/javascript" src="engine0/wowslider.js"></script>
+	<script type="text/javascript" src="engine0/script.js"></script>
+	</nav>
+
+	<!-- search boxes below -->
+  <div class="container">
+      <div class="col-xs-8 col-sm-8 col-md-8">
+          <input type="text" id="isbnSearch" class="form-control input-md" placeholder="ISBN">
+      </div>
+      <div class="col-xs-3 col-sm-3 col-md-3">
+          <button id="isbn-search-button" class="btn btn-primary btn-block">Find book</button>
+      </div>
+
+  </div>
+  <div class="container">
+      <div class="col-xs-8 col-sm-8 col-md-8">
+          <input type="text" id="authorSearch" class="form-control input-md" placeholder="Author Last Name or First Name">
+      </div>
+      <div class="col-xs-3 col-sm-3 col-md-3">
+          <button id="author-search-button" class="btn btn-primary btn-block">Find book</button>
+      </div>
+  </div>
+  <div class="container">
+      <div class="col-xs-8 col-sm-8 col-md-8">
+          <input type="text" id="titleSearch" class="form-control input-md" placeholder="Title of a book">
+      </div>
+      <div class="col-xs-3 col-sm-3 col-md-3">
+          <button id="title-search-button" class="btn btn-primary btn-block">Find book</button>
+      </div>
+    </div>
+  
+	<!-- search button below-->
+
+</body>
+</html>
