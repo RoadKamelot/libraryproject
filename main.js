@@ -1,6 +1,22 @@
 $(document).ready(function(){
 
 	$('#login-button').click(function(){
+	$.ajax({
+		url:'http://localhost:8080/mysql',
+		method:'GET',
+		beforeSend:function(xhr){
+			xhr.setRequestHeader('user-input', $('#userName').val());
+			xhr.setRequestHeader('password-input', $('#userPassword').val());
+		}
+		// success:function(data){
+		// 	console.log(data + 'in here-----------------');
+		// },
+		// error:function(err){
+		// 	console.log(err);
+		// }
+	}).done(function(success){
+		console.log(success);
+	});
 		//check with mysql for matching username and pw
 		alert('you want to log in');
 	});
