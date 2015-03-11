@@ -20,7 +20,7 @@ var server = app.listen(8080, function(){
 	var port = server.address().port;
 	console.log(host+ ' : '+port);
 });
-
+// reference: http://www.nodewiz.biz/nodejs-rest-api-with-mysql-and-express/
 var connection = mysql.createConnection({
 	host:'localhost',
 	user:'root',
@@ -29,13 +29,11 @@ var connection = mysql.createConnection({
 });
 
 connection.connect();
-
 connection.query('select * from bookauthor', function(err, rows, fields){
-
 	if(err) 
 		 console.log(err);
 	else
-	console.log('connect successfully');
+	console.log(rows);
 });
 
 

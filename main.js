@@ -1,21 +1,9 @@
 $(document).ready(function(){
-	var mysql = require('mysql');
-	var connection = mysql.createConnection({
-		host:'KonNguyen',
-		user:'root',
-		password:'password'
+
+	$('#login-button').click(function(){
+		//check with mysql for matching username and pw
+		alert('you want to log in');
 	});
-
-	connection.connect();
-
-	connection.query('select * from bookauthor', function(err, rows, fields){
-
-		if(err) 
-			 console.log(err);
-		
-		console.log('connect successfully');
-	});
-
  	 	$('#registerButton').click(function(){
  	 		//check if all fields are filled
  	 		//check if emails are matching
@@ -26,7 +14,5 @@ $(document).ready(function(){
 
  	 		//once everything satisfied, save all info into database and move to dashboard
  		alert( "you just registered." );
- 		window.location.href='dashboard.html';
  	});
- 	 	connection.end();
 });
