@@ -33,8 +33,10 @@ body {
 }
 .container {
     padding: 10px;
-    /*position: fixed;*/
     margin: 0 auto;
+}
+.login-container{
+  padding-top: 10%;
 }
 
 .form-login {
