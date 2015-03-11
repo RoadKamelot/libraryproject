@@ -6,8 +6,7 @@
     <link rel="stylesheet" type="text/css" href='main.css'>
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <script type='text/javascript' src='https://code.jquery.com/jquery-2.1.3.min.js'></script>
-    <script type='text/javascript' src='main.js'></script>
-    <script type='text/javascript' src='index.js'></script>
+    <script type='text/javascript' src='jquery.js'></script>
 
 </head>
 <body background="./pictures/marvelred.jpg" id="bodybg">
@@ -16,50 +15,50 @@
         <div>
         	<div class="panel panel-default">
         		<div class="panel-heading">
-			    		<h3 class="panel-title">Please fill required information below: </h3>
+			    		<h3 class="panel-title">Please fill required information (*) below: </h3>
 			 			</div>
 			 			<div class="panel-general">
 			    		<form role="form">
 			    			<div class="row">
 			    				<div class="col-xs-4 col-sm-4 col-md-4">
-			    					<div class="form-group"> Firstname
-			                <input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="First Name">
+			    					<div class="form-group"> Firstname*
+			                <input type="text" name="first_name" id="first-name" class="form-control input-sm" placeholder="First Name">
 			    					</div>
 			    				</div>
 			    				<div class="col-xs-4 col-sm-4 col-md-4">
 			    					<div class="form-group">
-			    						Lastname <input type="text" name="last_name" id="last_name" class="form-control input-sm" placeholder="Last Name">
+			    						Lastname* <input type="text" name="last-name" id="last-name" class="form-control input-sm" placeholder="Last Name">
 			    					</div>
 			    				</div>
 			    			</div>
 			    			<div class="row">
 							<div class="col-xs-4 col-sm-4 col-md-4">
-			    				<div class="form-group"> Email address
+			    				<div class="form-group"> Email address*
 			    					<input type="email" name="email" id="email" class="form-control input-sm" placeholder="abc@example.com">
 			    				</div>
 			    			</div>
 			    			<div class="col-xs-4 col-sm-4 col-md-4">
-			    				<div class="form-group"> Confirm email address
+			    				<div class="form-group"> Confirm email address*
 			    					<input type="email" name="email" id="confirm-email" class="form-control input-sm">
 			    				</div>
 			    			</div>
 			    			</div>
 			    			<div class="row">
 							<div class="col-xs-4 col-sm-4 col-md-4">
-			    				<div class="form-group"> Username
+			    				<div class="form-group"> Choose a username*
 			    					<input type="username" name="username" id="username" class="form-control input-sm" placeholder="username">
 			    				</div>
 			    			</div>
 			    			</div>
 			    			<div class="row">
 			    				<div class="col-xs-4 col-sm-4 col-md-4">
-			    					<div class="form-group">Password
+			    					<div class="form-group">Password*
 			    						<input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
 			    					</div>
 			    				</div>
 			    				<div class="col-xs-4 col-sm-4 col-md-4">
-			    					<div class="form-group">Confirm password
-			    						<input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password">
+			    					<div class="form-group">Confirm password*
+			    						<input type="password" name="password_confirmation" id="confirm-password" class="form-control input-sm" placeholder="Confirm Password">
 			    					</div>
 			    				</div>
 			    			</div>
@@ -67,23 +66,23 @@
 
 			    			<div class="row">
 			    				<div class="col-xs-4 col-sm-4 col-md-4">
-			    					<div class="form-group">Street/Apt
-			    						<input id="password" class="form-control input-sm" placeholder="street#/apt#">
+			    					<div class="form-group">Street/Apt*
+			    						<input id="street" class="form-control input-sm" placeholder="street#/apt#">
 			    					</div>
 			    				</div>
 			    				<div class="col-xs-3 col-sm-3 col-md-3">
-			    					<div class="form-group">City
+			    					<div class="form-group">City*
 			    						<input id="city" class="form-control input-sm" placeholder="city">
 			    					</div>
 			    				</div>
 			    				<div class="col-xs-2 col-sm-2 col-md-2">
-			    					<div class="form-group">Zipcode
-			    						<input id="zip" class="form-control input-sm" placeholder="12345">
+			    					<div class="form-group">Zipcode*
+			    						<input id="zip" class="form-control input-sm" placeholder="12345" maxlength="5">
 			    					</div>
 			    				</div>
 			    				<div class="col-xs-2 col-sm-2 col-md-2">
 			    					<div>State
-			    						<select class="selectpicker">
+			    						<select id="state" class="selectpicker">
 											<option value="AL">Alabama</option>
 											<option value="AK">Alaska</option>
 											<option value="AZ">Arizona</option>
@@ -146,7 +145,7 @@
 			    					</div>
 			    					<div class="col-xs-4 col-sm-4 col-md-4">
 			    					Home phone(no space)
-			    						<input id="phone" class="form-control input-sm" placeholder="2534445555">
+			    						<input id="phone" class="form-control input-sm" placeholder="2534445555" maxlength="10">
 			    					</div>
 		    					</div>
 
