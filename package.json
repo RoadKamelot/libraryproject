@@ -1,0 +1,23 @@
+{
+  "name": "libclone",
+  "version": "1.0.0",
+  "description": "database project",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://knguyen6@github.com/knguyen6/libraryproject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/knguyen6/libraryproject/issues"
+  },
+  "homepage": "https://github.com/knguyen6/libraryproject",
+  "dependencies": {
+    "express": "^4.12.2",
+    "mysql": "^2.5.5"
+  }
+}
