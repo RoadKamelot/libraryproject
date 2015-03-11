@@ -7,6 +7,12 @@ app.get('/', function(req, res) {
 	res.sendFile(__dirname+'/login.html');
 
 });
+app.get('/signuppage', function(req, res){
+	res.sendFile(__dirname+'/signuppage.html');
+});
+app.get('/dashboard', function(req, res){
+	res.sendFile(__dirname+'/dashboard.html');
+});
 
 var server = app.listen(8080, function(){
 	var host = server.address().address;
