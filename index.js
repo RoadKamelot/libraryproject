@@ -31,17 +31,27 @@ app.get('/mysql', function(req, res){
 		password:'password',
 		database : 'nguyen_khanh_db'
 	});
-
 	connection.connect();
-	connection.query('select * from bookauthor', function(err, rows, fields){
-		if(err) 
-			 console.log(err);
-		else
-		console.log(req);
+	connection.query('select username, pw from useraccount', function(err, rows, fields){
+		if(err) {
+			console.log("Querry wrong bla bla=========");
+		} else {
+			var result = 'false';
+			for(var i=0; i<rows.length; i++){
+				console.log('From jquery: '+req.headers.username);
+				console.log('From database: '+rows[i].username);
+				if((rows[i].username==req.headers.username) &&
+					(rows[i].pw==req.headers.password)){
+					result='true';
+				}
+			}
+			res.send(result);
+		}
 	});
 	connection.end();
+
 	
-	res.send(req.params);
+	
 });
 
 var server = app.listen(8080, function(){
@@ -49,5 +59,4 @@ var server = app.listen(8080, function(){
 	var port = server.address().port;
 	console.log(host+ ' : '+port);
 });
-// reference: http://www.nodewiz.biz/nodejs-rest-api-with-mysql-and-express/
 

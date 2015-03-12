@@ -22,28 +22,30 @@ $('#phone').keydown(validate);
 		if($('#userName').val().length == 0 || $('#userPassword').val().length ==0){
 			alert('Incorrect username or password');
 			return;
-		}
-		else {
+		} else {
+			var $username = $('#userName').val();
+			var $password = $('#userPassword').val();
+			// console.log('Input - username is ====' + $username);
 			$.ajax({
+				headers:{'username':$username, 'password':$password},
 				url:'http://localhost:8080/mysql',
 				method:'GET',
-				beforeSend:function(xhr){
-				xhr.setRequestHeader('user-input', $('#userName').val());
-				xhr.setRequestHeader('password-input', $('#userPassword').val());
-				},
+				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+				dataType:'text',
+				processData: false,
 				success: function(result){
-					console.log("result: "+result);
-				}, 
-				contentType:'application/json',
-				processData: false
-		
-	}).done(function(success){
-		console.log(success);
-	});
-		//check with mysql for matching username and pw
-		alert('you want to log in');
+					console.log(result);
+					if(result=='true'){
+						alert('Welcome, '+ $username);
+						$(location).attr('href','/dashboard.html');
+					}
+					else
+						alert('Invalid username or password.');
+					
+				}
+				
+			});
 		}
-	
 	});
 //interaction for register button in signuppage.html
  	 	$('#registerButton').click(function(){
