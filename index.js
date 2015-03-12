@@ -10,11 +10,12 @@ app.use(express.static(__dirname+'/'));
 app.use('/pictures', express.static(__dirname+'/'));
 
 //to simplify all the processes, allow user to access database
-// app.use(function(req, res, next){
-// 	res.header('Access-Controll-Allow-Origin', '*');
-// 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-// 	next();
-// });
+app.use(function(req, res, next){
+	res.header('Access-Controll-Allow-Origin', 'http://localhost:8080');
+	res.header('Access-Controll-Allow-Methods', 'GET, PUT, POST, DELETE');
+	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+	next();
+});
 
 /*http://codeforgeek.com/2015/01/render-html-file-expressjs/
  Allow server to load html files.
@@ -25,22 +26,22 @@ app.get('/', function(req, res) {
 //connect to my database
 app.get('/mysql', function(req, res){
 	var connection = mysql.createConnection({
-	host:'localhost',
-	user:'root',
-	password:'password',
-	database : 'nguyen_khanh_db'
-});
+		host:'localhost',
+		user:'root',
+		password:'password',
+		database : 'nguyen_khanh_db'
+	});
 
-connection.connect();
-connection.query('select * from bookauthor', function(err, rows, fields){
-	if(err) 
-		 console.log(err);
-	else
-	console.log(rows);
-});
-
-connection.end();
-res.send('Hello');
+	connection.connect();
+	connection.query('select * from bookauthor', function(err, rows, fields){
+		if(err) 
+			 console.log(err);
+		else
+		console.log(req);
+	});
+	connection.end();
+	
+	res.send(req.params);
 });
 
 var server = app.listen(8080, function(){

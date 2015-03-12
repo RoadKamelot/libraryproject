@@ -77,7 +77,7 @@
 			    				</div>
 			    				<div class="col-xs-2 col-sm-2 col-md-2">
 			    					<div class="form-group">Zipcode*
-			    						<input id="zip" class="form-control input-sm" placeholder="12345" maxlength="5">
+			    						<input type="text" id="zip" class="form-control input-sm" placeholder="12345" maxlength="5" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
 			    					</div>
 			    				</div>
 			    				<div class="col-xs-2 col-sm-2 col-md-2">
@@ -145,7 +145,7 @@
 			    					</div>
 			    					<div class="col-xs-4 col-sm-4 col-md-4">
 			    					Home phone(no space)
-			    						<input id="phone" class="form-control input-sm" placeholder="2534445555" maxlength="10">
+			    						<input type="text" id="phone" class="form-control input-sm" placeholder="2534445555" maxlength="10">
 			    					</div>
 		    					</div>
 
