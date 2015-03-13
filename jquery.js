@@ -17,7 +17,13 @@ $(document).ready(function(){
 }
 $('#zip').keydown(validate);
 $('#phone').keydown(validate);
-//interaction for login button in login.html
+$('#isbn-text').keydown(validate);
+
+$('#logout').click(function(){
+	$(location).attr('href','/login.html');
+});
+/*==================interaction for LOGIN button in login.html====================================*/
+
 	$('#login-button').click(function(){
 		if($('#userName').val().length == 0 || $('#userPassword').val().length ==0){
 			alert('Incorrect username or password');
@@ -28,7 +34,7 @@ $('#phone').keydown(validate);
 			// console.log('Input - username is ====' + $username);
 			$.ajax({
 				headers:{'username':$username, 'password':$password},
-				url:'http://localhost:8080/mysql',
+				url:'http://localhost:8080/login-validate',
 				method:'GET',
 				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
 				dataType:'text',
@@ -41,15 +47,16 @@ $('#phone').keydown(validate);
 					}
 					else
 						alert('Invalid username or password.');
-					
 				}
 				
 			});
 		}
 	});
-//interaction for register button in signuppage.html
+
+/*==================interaction for REGISTER button in login.html====================================*/
  	 	$('#registerButton').click(function(){
  	 		//check if all fields are filled
+ 	 		
  	 		if($('#first-name').val().length == 0 || 
  	 			$('#last-name').val().length ==0 ||
  	 			$('#email').val().length==0 || 
@@ -74,45 +81,84 @@ $('#phone').keydown(validate);
  	 			alert("Password does not match !");
  	 			return;
  	 		}
- 	 		//check if username is unique, pass all info to header
- 	 		$.ajax({
-				url:'http://localhost:8080/mysql',
-				method:'GET',
-				beforeSend:function(xhr){
-				xhr.setRequestHeader('first-name', $('#first-name').val());
-				xhr.setRequestHeader('last-name', $('#last-name').val());
-				xhr.setRequestHeader('email', $('#email').val());
-				xhr.setRequestHeader('confirm-email', $('#confirm-email').val());
-				xhr.setRequestHeader('password', $('#password').val());
-				xhr.setRequestHeader('confirm-password', $('#confirm-password').val());
-				xhr.setRequestHeader('street', $('#street').val());
-				xhr.setRequestHeader('city', $('#city').val());
-				xhr.setRequestHeader('zip', $('#zip').val());
-				xhr.setRequestHeader('state', $('#state').val());
-				xhr.setRequestHeader('phone', $('#phone').val());
-		}
-		
-	}).done(function(success){
-		console.log(success);
-	});
-			//check with exist usernames in database:
 
- 	 		//once everything satisfied, insert all info into database and move to dashboard
- 		alert( "Welcome to the mini library, where you can find your favorite comic books !" );
+ 	 		//check if username is unique, pass all info to header
+ 	 		var userData = {
+ 	 			'firstName': $('#first-name').val(),
+				'lastName': $('#last-name').val(),
+				'email': $('#email').val(),
+				'confirmEmail': $('#confirm-email').val(),
+				'username': $('#username').val(),
+				'password': $('#password').val(),
+				'confirmPassword': $('#confirm-password').val(),
+				'street': $('#street').val(),
+				'city': $('#city').val(),
+				'zip':$('#zip').val(),
+				'phone': $('#phone').val()
+ 	 		};
+ 	 		$.ajax({
+			    url : "http://localhost:8080/register",
+			    type: "POST",
+			    data : userData,
+			    dataType:'text',
+			    contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+			    // processData: false,
+			    success: function(data, textStatus, jqXHR)
+			    {
+			        console.log(data);
+			        if(data=='true'){
+			        	//once everything satisfied, insert all info into database and move to dashboard
+				 		alert( "Welcome to the mini library, where you can find your favorite comic books !" );
+				 		$(location).attr('href','/dashboard.html');
+			        }
+			        else{
+			        	alert("Username or email already exist. Please choose a different username or email address.")
+			        }
+			    },
+			    error: function (jqXHR, textStatus, errorThrown)
+			    {
+			 		console.log(errorThrown);
+			    }
+			});
+
 
  	});
-//interaction for search buttons in dashboard:
+/********************************************************interaction for ISBN search buttons in dashboard:***/
 $('#isbn-search-button').click(function(){
 	var $input = $('#isbn-text').val();
 	if ($input.length ==0){
 		alert('What is the ISBN you\'d like to search for?');
 		return;
-	}
-	else {
+	} else {
 		//display list of book from mysql here
-		alert('Find book in process');
+		var $isbn = $('#isbn-text').val();
+		$.ajax({
+				headers:{'isbn':$isbn},
+				url:'http://localhost:8080/isbn-search',
+				method:'GET',
+				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+				dataType:'text',
+				processData: false,
+				success: function(result){
+					console.log(result);
+					if(result != 'false'){
+						//alert('books of search result will be displayed: ');
+						$('#searchbox').empty();
+						$('#searchbox').append(result);
+						
+					} else {
+						$('#searchbox').empty();
+						alert('Book not found.');
+						return;
+					}
+						
+				}
+				
+			});
 	}
 });
+/********************************************************interaction for AUTHOR search buttons in dashboard:***/
+
 $('#author-search-button').click(function(){
 	var $input = $('#author-text').val();
 	if ($input.length ==0){
@@ -121,10 +167,33 @@ $('#author-search-button').click(function(){
 	}
 	else {
 		//display list of book from mysql here
-		alert('Find book in process');
+		var $author = $('#author-text').val();
+		$.ajax({
+				headers:{'author':$author},
+				url:'http://localhost:8080/author-search',
+				method:'GET',
+				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+				dataType:'text',
+				processData: false,
+				success: function(result){
+					console.log(result);
+					if(result != 'false'){
+						//alert('books of search result will be displayed: ');
+						$('#searchbox').empty();
+						$('#searchbox').append(result);
+						
+					} else {
+						$('#searchbox').empty();
+						alert('Book not found.');
+						return;
+					}
+						
+				}
+				
+			});
 	}
 });
-
+/********************************************************interaction for TITLE search buttons in dashboard:***/
 $('#title-search-button').click(function(){
 	var $input = $('#title-text').val();
 	if ($input.length ==0){
@@ -133,9 +202,30 @@ $('#title-search-button').click(function(){
 	}
 	else {
 		//display list of book from mysql here
-
-
-		alert('Find book in process');
+		var $title = $('#title-text').val();
+		$.ajax({
+				headers:{'title':$title},
+				url:'http://localhost:8080/title-search',
+				method:'GET',
+				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+				dataType:'text',
+				processData: false,
+				success: function(result){
+					console.log(result);
+					if(result != 'false'){
+						//alert('books of search result will be displayed: ');
+						$('#searchbox').empty();
+						$('#searchbox').append(result);
+						
+					} else {
+						$('#searchbox').empty();
+						alert('Book not found.');
+						return;
+					}
+						
+				}
+				
+			});
 	}
 });
 
