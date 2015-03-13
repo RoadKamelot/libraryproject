@@ -23,5 +23,7 @@
     "mysql": "^2.5.5",
     "underscore": "^1.8.2"
   },
-  "engine": "node 0.10.34"
+  "engines": {
+    "node": "0.10.34"
+  }
 }
