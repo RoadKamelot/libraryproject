@@ -57,62 +57,47 @@ app.get('/login-validate', function(req, res){
 });
 /*============================== Register button ===============*/
 app.post('/register', function(req, res){
-	var propValue;
-	// for(var propName in req.body){
-	// 	propValue=req.body[propName];
-	// 	console.log(propName+" : "+propValue);
-	// };
-	console.log(req.body.firstName);
-	console.log(req.body.lastName);
-	console.log(req.body.username);
 
-	var connection = mysql.createConnection({
-		host:'localhost',
-		user:'root',
-		password:'password',
-		database : 'nguyen_khanh_db'
-	});
-	var result = false;
-	connection.connect();
-	//post is the package information user type in, to be added to table:
-	var post = {Username: req.body.username, 
-		Lname: req.body.lastName,
-		Fname: req.body.firstName,
-		Addr: req.body.street,
-		Email: req.body.email,
-		City: req.body.city,
-		Zipcode: req.body.zip,
-		Phone: req.body.phone
-		};
-	connection.query('select Username, Email from userinfo', function(err, rows, fields){
-		for(var value in rows){
-			if(rows[value].Username == req.body.username || rows[value].Email == req.body.email){
-				result=false;
-				// console.log(rows[value].Username+" check availability =============================================");
-				res.send("Fail to register");
-				return;
-			}
-		};
-		
-	});
-	if(result==true) {
-		connection.query('insert into userinfo set ?',post, function(err, rows, fields){
-			if(err){
-				//insert into <table> value();
-				console.log("Fail to register !");
-			} else {
-				result = true;
-				// console.log("Just added to the whatever");
-				res.send("User successfully registered !");
-			}
-
-		});
-	}	
-	
-	
-	connection.end();
-	
+    var connection = mysql.createConnection({
+        host:'localhost',
+        user:'root',
+        password:'password',
+        database : 'nguyen_khanh_db'
+    });
+    var result = true;
+    connection.connect();
+    //post is the package information user type in, to be added to table:
+    var post = {Username: req.body.username, 
+        Lname: req.body.lastName,
+        Fname: req.body.firstName,
+        Addr: req.body.street,
+        Email: req.body.email,
+        City: req.body.city,
+        Zipcode: req.body.zip,
+        Phone: req.body.phone
+        };
+    connection.query('select Username, Email from userinfo', function(err, rows, fields){
+        for(var value in rows){
+        	var isDuplicate = rows[value].Username == req.body.username || rows[value].Email == req.body.email;
+            if(isDuplicate) {
+                result=false;
+                connection.end();
+                return res.send("Fail to register because of duplicated userinfo");;
+            }
+        };
+        connection.query('insert into userinfo set ?', post, function(err, rows, fields){
+        	console.log('err: ' + err);
+            if(err){
+            	connection.end();
+                return res.send(false);
+            } else {
+            	connection.end();
+                return res.send("User successfully registered!");
+            }
+        });
+    });
 });
+
 /********************************************************** ISBN Search button *******************************************/
 app.get('/isbn-search', function(req, res){
 	var connection = mysql.createConnection({
@@ -133,7 +118,7 @@ app.get('/isbn-search', function(req, res){
 					var title = rows[value].Title;
 					var category=rows[value].Category;
 
-					return res.send('<div class="container searchbox-div"><div><strong>'+isbn+ '</strong></div><div>'+author+'</div><div>'+title+'</div><div> '+category+ '</div><div class="col-xs-3 col-sm-3 col-md-3"><button class="btn btn-primary btn-block">Add to Cart</button></div></div>');
+					return res.send('<div class="container searchbox-div"><div><strong>'+isbn+ '</strong></div><div>'+author+'</div><div>'+title+'</div><div> '+category+ '</div></div>');
 
 				}
 			}
@@ -168,7 +153,7 @@ app.get('/author-search', function(req, res){
 					var category=rows[value].Category;
 
 					result = true;
-					resultList.push('<div class="container searchbox-div"><div>'+isbn+ '</div><div><strong>'+author+'</strong></div><div>'+title+'</div><div> '+category+ '</div><div class="col-xs-3 col-sm-3 col-md-3"><button class="btn btn-primary btn-block">Add to Cart</button></div></div>');
+					resultList.push('<div class="container searchbox-div"><div>'+isbn+ '</div><div><strong>'+author+'</strong></div><div>'+title+'</div><div> '+category+ '</div></div>');
 				}
 			}
 			if (result) {
@@ -211,7 +196,7 @@ app.get('/title-search', function(req, res){
 					var category=rows[value].Category;
 
 					result = true;
-					resultList.push('<div class="container searchbox-div"><div>'+isbn+ '</div><div>'+author+'</div><div><strong>'+title+'</strong></div><div> '+category+ '</div><div class="col-xs-3 col-sm-3 col-md-3"><button class="btn btn-primary btn-block">Add to Cart</button></div></div>');
+					resultList.push('<div class="container searchbox-div"><div>'+isbn+ '</div><div>'+author+'</div><div><strong>'+title+'</strong></div><div> '+category+ '</div></div>');
 				}
 			}
 			if (result) {
@@ -229,53 +214,124 @@ app.get('/title-search', function(req, res){
 	connection.end();
 });
 /************************************************** Record links **************/
-// app.get('/record', function(req, res){
-// 	var connection = mysql.createConnection({
-// 		host:'localhost',
-// 		user:'root',
-// 		password:'password',
-// 		database : 'nguyen_khanh_db'
-// 	});
-// 	connection.connect();
+
+
+/***********************************************************DC *****************************************/
+app.get('/dc', function(req, res){
+	var connection = mysql.createConnection({
+		host:'localhost',
+		user:'root',
+		password:'password',
+		database : 'nguyen_khanh_db'
+	});
+	connection.connect();
 	
-// 	connection.query('select * from userbook where Username =?',req.headers.username, function(err, rows, fields){
-// 		if(err) {
-// 			console.log(err);
-// 		} else {
-// 			var result = false,
-// 				resultList = [];
+	connection.query("select ISBN, Author, Title, Category from bookinfo where Category='DC Comics'", function(err, rows, fields){
+		if(err) {
+			console.log(err);
+		} else {
+			var resultList = [];
+			for(var value in rows){
+				var isbn = rows[value].ISBN;
+				var author = rows[value].Author;
+				var title = rows[value].Title;
+				var category=rows[value].Category;
+				console.log(rows[value]);
+				resultList.push('<div class="container searchbox-div"><div>'+isbn+ '</div><div>'+author+'</div><div><strong>'+title+'</strong></div><div> '+category+ '</div></div>');
+			}
 
-// 							console.log(req.headers.username);
+			if (resultList.length > 0) {
+				var resultListTemplate = '';
+				resultList.forEach(function(html) {
+					resultListTemplate += html;
+				});
 
-// 			for(var value in rows){
-// 				console.log(rows[value]);
+				return res.send(resultListTemplate);
+			} else {
+				res.send('false');
+			}
+		}
+	});
+	connection.end();
+});
 
-// 				var test = rows[value].Title.toLowerCase();
-// 				if(rows[value].Username == req.headers.username){
-// 					var isbn = rows[value].ISBN;
-// 					var checkout = rows[value].Checkout_date;
-// 					var returnD = rows[value].Return_date;
-// 					// var category=rows[value].Category;
-
-// 					result = true;
-// 					resultList.push('<div class="container searchbox-div"><div>'+isbn+ '</div><div>'+checkout+'</div><div><strong>'+returnDate+'</strong></div></div>');
-// 				}
-// 			}
-// 			if (result) {
-// 				var resultListTemplate = '';
-// 				resultList.forEach(function(html) {
-// 					resultListTemplate += html;
-// 				});
-
-// 				return res.send(resultListTemplate);
-// 			} else {
-// 				return res.send(false);
-// 			}
-// 		}
-// 	});
+// /**********************************************MARVEL *******************************************************/
+app.get('/marvel', function(req, res){
+	var connection = mysql.createConnection({
+		host:'localhost',
+		user:'root',
+		password:'password',
+		database : 'nguyen_khanh_db'
+	});
+	connection.connect();
 	
-// 	connection.end();
-// });
+	connection.query("select ISBN, Author, Title, Category from bookinfo where Category='Marvel Comics'", function(err, rows, fields){
+		if(err) {
+			console.log(err);
+		} else {
+			var resultList = [];
+			for(var value in rows){
+				var isbn = rows[value].ISBN;
+				var author = rows[value].Author;
+				var title = rows[value].Title;
+				var category=rows[value].Category;
+				console.log(rows[value]);
+				resultList.push('<div class="container searchbox-div"><div>'+isbn+ '</div><div>'+author+'</div><div><strong>'+title+'</strong></div><div> '+category+ '</div></div>');
+			}
+
+			if (resultList.length > 0) {
+				var resultListTemplate = '';
+				resultList.forEach(function(html) {
+					resultListTemplate += html;
+				});
+
+				return res.send(resultListTemplate);
+			} else {
+				res.send('false');
+			}
+		}
+	});
+	connection.end();
+});
+/*************************************************MANGA ********************************************************/
+
+app.get('/manga', function(req, res){
+	var connection = mysql.createConnection({
+		host:'localhost',
+		user:'root',
+		password:'password',
+		database : 'nguyen_khanh_db'
+	});
+	connection.connect();
+	
+	connection.query("select ISBN, Author, Title, Category from bookinfo where Category='Manga'", function(err, rows, fields){
+		if(err) {
+			console.log(err);
+		} else {
+			var resultList = [];
+			for(var value in rows){
+				var isbn = rows[value].ISBN;
+				var author = rows[value].Author;
+				var title = rows[value].Title;
+				var category=rows[value].Category;
+				console.log(rows[value]);
+				resultList.push('<div class="container searchbox-div"><div>'+isbn+ '</div><div>'+author+'</div><div><strong>'+title+'</strong></div><div> '+category+ '</div></div>');
+			}
+
+			if (resultList.length > 0) {
+				var resultListTemplate = '';
+				resultList.forEach(function(html) {
+					resultListTemplate += html;
+				});
+
+				return res.send(resultListTemplate);
+			} else {
+				res.send('false');
+			}
+		}
+	});
+	connection.end();
+});
 
 
 var server = app.listen(8080, function(){
