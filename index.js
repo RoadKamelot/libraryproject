@@ -12,8 +12,7 @@ var app = express();
 
 
 /* mysql credential */
-var DATABASE_URL = 'mysql://b17bd3ffac20b3:5d6d149b@us-cdbr-iron-east-02.clear
-db.net/heroku_a6679b0da499276?reconnect=true';
+var DATABASE_URL = 'mysql://b17bd3ffac20b3:5d6d149b@us-cdbr-iron-east-02.cleardb.net/heroku_a6679b0da499276?reconnect=true';
 var USERNAME = 'b17bd3ffac20b3';
 var PASSWORD = 'd64c505b20f19d7';
 var DATABASE = 'heroku_a6679b0da499276';
@@ -351,7 +350,7 @@ app.get('/manga', function(req, res){
 	connection.end();
 });
 
-app.set('port', (process.env.PORT || 5000))
+app.set('port', (process.env.PORT || 8080))
 
 app.get('/', function(request, response) {
   response.send(cool());
