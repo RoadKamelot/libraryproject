@@ -50,7 +50,7 @@ $('#logout').click(function(){
 			// console.log('Input - username is ====' + $username);
 			$.ajax({
 				headers:{'username':$username, 'password':$password},
-				url:'http://localhost:8080/login-validate',
+				url:'./login-validate',
 				method:'GET',
 				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
 				dataType:'text',
@@ -118,7 +118,7 @@ $('#registerButton').click(function(){
 		'phone': $('#phone').val()
 	};
 	$.ajax({
-	    url : "http://localhost:8080/register",
+	    url : "./register",
 	    type: "POST",
 	    data : userData,
 	    dataType:'text',
@@ -159,7 +159,7 @@ $('#isbn-search-button').click(function(){
 		var $isbn = $('#isbn-text').val();
 		$.ajax({
 			headers:{'isbn':$isbn},
-			url:'http://localhost:8080/isbn-search',
+			url:'./isbn-search',
 			method:'GET',
 			contentType:'application/x-www-form-urlencoded; charset=UTF-8',
 			dataType:'text',
@@ -193,7 +193,7 @@ $('#author-search-button').click(function(){
 		var $author = $('#author-text').val();
 		$.ajax({
 			headers:{'author':$author},
-			url:'http://localhost:8080/author-search',
+			url:'./author-search',
 			method:'GET',
 			contentType:'application/x-www-form-urlencoded; charset=UTF-8',
 			dataType:'text',
@@ -226,7 +226,7 @@ $('#title-search-button').click(function(){
 		var $title = $('#title-text').val();
 		$.ajax({
 				headers:{'title':$title},
-				url:'http://localhost:8080/title-search',
+				url:'./title-search',
 				method:'GET',
 				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
 				dataType:'text',
@@ -258,7 +258,7 @@ $('#dclist').click(function(){
 		var $category = 'DC Comics';
 		$.ajax({
 				headers:{'category':$category},
-				url:'http://localhost:8080/dc',
+				url:'./dc',
 				method:'GET',
 				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
 				dataType:'text',
@@ -288,7 +288,7 @@ $('#marvellist').click(function(){
 		var $category = 'Marvel Comics';
 		$.ajax({
 				headers:{'category':$category},
-				url:'http://localhost:8080/marvel',
+				url:'./marvel',
 				method:'GET',
 				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
 				dataType:'text',
@@ -318,7 +318,7 @@ $('#mangalist').click(function(){
 		var $category = 'Manga';
 		$.ajax({
 				headers:{'category':$category},
-				url:'http://localhost:8080/manga',
+				url:'./manga',
 				method:'GET',
 				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
 				dataType:'text',
