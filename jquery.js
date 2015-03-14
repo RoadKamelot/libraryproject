@@ -23,13 +23,13 @@ $('#logout').click(function(){
 	$(location).attr('href','/login.html');
 });
 /*==================interaction for LOGIN button in login.html====================================*/
-
+	var $username;
 	$('#login-button').click(function(){
 		if($('#userName').val().length == 0 || $('#userPassword').val().length ==0){
 			alert('Incorrect username or password');
 			return;
 		} else {
-			var $username = $('#userName').val();
+				$username = $('#userName').val();
 			var $password = $('#userPassword').val();
 			// console.log('Input - username is ====' + $username);
 			$.ajax({
@@ -229,5 +229,34 @@ $('#title-search-button').click(function(){
 	}
 });
 
+/*********************************** MY RECORD link ************************/
+$('#record').click(function(){
+	//display list of book from mysql here
+		//need username to search for record in userbook
+		$.ajax({
+				headers:{'username':$username},
+				url:'http://localhost:8080/title-search',
+				method:'GET',
+				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+				dataType:'text',
+				processData: false,
+				success: function(result){
+					console.log(result);
+					if(result != 'false'){
+						alert('Showing books');
+						//alert('books of search result will be displayed: ');
+						// $('#searchbox').empty();
+						// $('#searchbox').append(result);
+						
+					} else {
+						// $('#searchbox').empty();
+						alert('No result');
+						return;
+					}
+						
+				}
+				
+			});
 
+});
 });

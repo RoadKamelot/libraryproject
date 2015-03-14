@@ -228,6 +228,56 @@ app.get('/title-search', function(req, res){
 	});
 	connection.end();
 });
+/************************************************** Record links **************/
+// app.get('/record', function(req, res){
+// 	var connection = mysql.createConnection({
+// 		host:'localhost',
+// 		user:'root',
+// 		password:'password',
+// 		database : 'nguyen_khanh_db'
+// 	});
+// 	connection.connect();
+	
+// 	connection.query('select * from userbook where Username =?',req.headers.username, function(err, rows, fields){
+// 		if(err) {
+// 			console.log(err);
+// 		} else {
+// 			var result = false,
+// 				resultList = [];
+
+// 							console.log(req.headers.username);
+
+// 			for(var value in rows){
+// 				console.log(rows[value]);
+
+// 				var test = rows[value].Title.toLowerCase();
+// 				if(rows[value].Username == req.headers.username){
+// 					var isbn = rows[value].ISBN;
+// 					var checkout = rows[value].Checkout_date;
+// 					var returnD = rows[value].Return_date;
+// 					// var category=rows[value].Category;
+
+// 					result = true;
+// 					resultList.push('<div class="container searchbox-div"><div>'+isbn+ '</div><div>'+checkout+'</div><div><strong>'+returnDate+'</strong></div></div>');
+// 				}
+// 			}
+// 			if (result) {
+// 				var resultListTemplate = '';
+// 				resultList.forEach(function(html) {
+// 					resultListTemplate += html;
+// 				});
+
+// 				return res.send(resultListTemplate);
+// 			} else {
+// 				return res.send(false);
+// 			}
+// 		}
+// 	});
+	
+// 	connection.end();
+// });
+
+
 var server = app.listen(8080, function(){
 	var host = server.address().address;
 	var port = server.address().port;
