@@ -13,7 +13,7 @@ var app = express();
 
 
 /* mysql credential */
-var DATABASE_URL = 'mysql://b17bd3ffac20b3:5d6d149b@us-cdbr-iron-east-02.cleardb.net/heroku_a6679b0da499276?reconnect=true';
+var DATABASE_URL = 'us-cdbr-iron-east-02.cleardb.net';
 var DATABASE_USERNAME = 'b17bd3ffac20b3';
 var DATABASE_PASSWORD = 'd64c505b20f19d7';
 var DATABASE = 'heroku_a6679b0da499276';
