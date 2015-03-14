@@ -6,8 +6,17 @@ var express = require('express'),
 	mysql = require('mysql'),
 	path = require('path'),
 	bodyParser = require('body-parser'),
-	_und = require('underscore');
+	_und = require('underscore'),
+	cool = require('cool-ascii-faces');
 var app = express();
+
+
+/* mysql credential */
+var DATABASE_URL = 'mysql://b17bd3ffac20b3:5d6d149b@us-cdbr-iron-east-02.clear
+db.net/heroku_a6679b0da499276?reconnect=true';
+var USERNAME = 'b17bd3ffac20b3';
+var PASSWORD = 'd64c505b20f19d7';
+var DATABASE = 'heroku_a6679b0da499276';
 
 /*these are to load local resources (any file in libclone after '/' such as pictures and main.css
 without them the pictures or css file.*/
@@ -34,10 +43,10 @@ app.get('/', function(req, res) {
 //connect to my database
 app.get('/login-validate', function(req, res){
 	var connection = mysql.createConnection({
-		host:'localhost',
-		user:'root',
-		password:'password',
-		database : 'nguyen_khanh_db'
+		host: process.env.DATABASE_URL || 'localhost',
+		user: process.env.USERNAME || 'root',
+		password: process.env.PASSWORD || 'password',
+		database : process.env.DATABASE ||'nguyen_khanh_db'
 	});
 	connection.connect();
 	connection.query('select username, pw from useraccount', function(err, rows, fields){
@@ -63,10 +72,10 @@ app.get('/login-validate', function(req, res){
 app.post('/register', function(req, res){
 
     var connection = mysql.createConnection({
-        host:'localhost',
-        user:'root',
-        password:'password',
-        database : 'nguyen_khanh_db'
+        host: process.env.DATABASE_URL || 'localhost',
+		user: process.env.USERNAME || 'root',
+		password: process.env.PASSWORD || 'password',
+		database : process.env.DATABASE ||'nguyen_khanh_db'
     });
     var result = true;
     connection.connect();
@@ -106,10 +115,10 @@ app.post('/register', function(req, res){
 										Query information from database and return result to jquery to display*/
 app.get('/isbn-search', function(req, res){
 	var connection = mysql.createConnection({
-		host:'localhost',
-		user:'root',
-		password:'password',
-		database : 'nguyen_khanh_db'
+	host: process.env.DATABASE_URL || 'localhost',
+	user: process.env.USERNAME || 'root',
+	password: process.env.PASSWORD || 'password',
+	database : process.env.DATABASE ||'nguyen_khanh_db'
 	});
 	connection.connect();
 	connection.query('select ISBN, Title, Author, Category from bookinfo', function(err, rows, fields){
@@ -137,10 +146,10 @@ app.get('/isbn-search', function(req, res){
 
 app.get('/author-search', function(req, res){
 	var connection = mysql.createConnection({
-		host:'localhost',
-		user:'root',
-		password:'password',
-		database : 'nguyen_khanh_db'
+		host: process.env.DATABASE_URL || 'localhost',
+		user: process.env.USERNAME || 'root',
+		password: process.env.PASSWORD || 'password',
+		database : process.env.DATABASE ||'nguyen_khanh_db'
 	});
 	connection.connect();
 	
@@ -181,10 +190,10 @@ app.get('/author-search', function(req, res){
 						Query information from database and return result to jquery to display */
 app.get('/title-search', function(req, res){
 	var connection = mysql.createConnection({
-		host:'localhost',
-		user:'root',
-		password:'password',
-		database : 'nguyen_khanh_db'
+		host: process.env.DATABASE_URL || 'localhost',
+		user: process.env.USERNAME || 'root',
+		password: process.env.PASSWORD || 'password',
+		database : process.env.DATABASE ||'nguyen_khanh_db'
 	});
 	connection.connect();
 	
@@ -226,10 +235,10 @@ app.get('/title-search', function(req, res){
 /***********************************************************DC *****************************************/
 app.get('/dc', function(req, res){
 	var connection = mysql.createConnection({
-		host:'localhost',
-		user:'root',
-		password:'password',
-		database : 'nguyen_khanh_db'
+		host: process.env.DATABASE_URL || 'localhost',
+		user: process.env.USERNAME || 'root',
+		password: process.env.PASSWORD || 'password',
+		database : process.env.DATABASE ||'nguyen_khanh_db'
 	});
 	connection.connect();
 	
@@ -266,10 +275,10 @@ app.get('/dc', function(req, res){
 													Query information from database and return result to jquery to display*/
 app.get('/marvel', function(req, res){
 	var connection = mysql.createConnection({
-		host:'localhost',
-		user:'root',
-		password:'password',
-		database : 'nguyen_khanh_db'
+		host: process.env.DATABASE_URL || 'localhost',
+		user: process.env.USERNAME || 'root',
+		password: process.env.PASSWORD || 'password',
+		database : process.env.DATABASE ||'nguyen_khanh_db'
 	});
 	connection.connect();
 	
@@ -306,10 +315,10 @@ app.get('/marvel', function(req, res){
 
 app.get('/manga', function(req, res){
 	var connection = mysql.createConnection({
-		host:'localhost',
-		user:'root',
-		password:'password',
-		database : 'nguyen_khanh_db'
+		host: process.env.DATABASE_URL || 'localhost',
+		user: process.env.USERNAME || 'root',
+		password: process.env.PASSWORD || 'password',
+		database : process.env.DATABASE ||'nguyen_khanh_db'
 	});
 	connection.connect();
 	
@@ -342,10 +351,20 @@ app.get('/manga', function(req, res){
 	connection.end();
 });
 
+app.set('port', (process.env.PORT || 5000))
 
-var server = app.listen(8080, function(){
-	var host = server.address().address;
-	var port = server.address().port;
-	console.log(host+ ' : '+port);
+app.get('/', function(request, response) {
+  response.send(cool());
 });
+
+app.listen(app.get('port'), function() {
+  console.log("Node app is running at localhost:" + app.get('port'))
+});
+
+
+// var server = app.listen(8080, function(){
+// 	var host = server.address().address;
+// 	var port = server.address().port;
+// 	console.log(host+ ' : '+port);
+// });
 
