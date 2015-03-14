@@ -1,4 +1,7 @@
-
+/* index.js
+Khanh Nguyen
+This javascript file has plug-in installations, connect to mysql, query information that was passing from jquery.
+*/
 var express = require('express'), 
 	mysql = require('mysql'),
 	path = require('path'),
@@ -55,7 +58,8 @@ app.get('/login-validate', function(req, res){
 	});
 	connection.end();
 });
-/*============================== Register button ===============*/
+/*============================== Register button ===============
+		This will do the check with database and insert information */
 app.post('/register', function(req, res){
 
     var connection = mysql.createConnection({
@@ -98,7 +102,8 @@ app.post('/register', function(req, res){
     });
 });
 
-/********************************************************** ISBN Search button *******************************************/
+/********************************************************** ISBN Search button ******************************************
+										Query information from database and return result to jquery to display*/
 app.get('/isbn-search', function(req, res){
 	var connection = mysql.createConnection({
 		host:'localhost',
@@ -127,7 +132,9 @@ app.get('/isbn-search', function(req, res){
 	});
 	connection.end();
 });
-/********************************************************** AUTHOR Search button *******************************************/
+/********************************************************** AUTHOR Search button ******************************************
+						Query information from database and return result to jquery to display*/
+
 app.get('/author-search', function(req, res){
 	var connection = mysql.createConnection({
 		host:'localhost',
@@ -170,7 +177,8 @@ app.get('/author-search', function(req, res){
 	});
 	connection.end();
 });
-/********************************************************** TITLE Search button *******************************************/
+/********************************************************** TITLE Search button ******************************************
+						Query information from database and return result to jquery to display */
 app.get('/title-search', function(req, res){
 	var connection = mysql.createConnection({
 		host:'localhost',
@@ -213,7 +221,6 @@ app.get('/title-search', function(req, res){
 	});
 	connection.end();
 });
-/************************************************** Record links **************/
 
 
 /***********************************************************DC *****************************************/
@@ -255,7 +262,8 @@ app.get('/dc', function(req, res){
 	connection.end();
 });
 
-// /**********************************************MARVEL *******************************************************/
+ /********************************************** MARVEL category link ******************************************************
+													Query information from database and return result to jquery to display*/
 app.get('/marvel', function(req, res){
 	var connection = mysql.createConnection({
 		host:'localhost',
@@ -293,7 +301,8 @@ app.get('/marvel', function(req, res){
 	});
 	connection.end();
 });
-/*************************************************MANGA ********************************************************/
+/*************************************************MANGA *******************************************************
+									Query information from database and return result to jquery to display*/
 
 app.get('/manga', function(req, res){
 	var connection = mysql.createConnection({

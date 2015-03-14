@@ -14,7 +14,8 @@ Setup your machine (Important):
 
 
 My github source code: https://github.com/knguyen6/libraryproject
-Test log in:
+
+Test user log in:
 
 Username: test
 Password: password.

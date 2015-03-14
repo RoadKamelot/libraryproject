@@ -1,4 +1,9 @@
+/* Khanh Nguyen
+	Library Project.
+This is the jquery file jquery.js, it will be responsible for buttons, links' click events*/
+
 $(document).ready(function(){
+
 //validate zipcode is only number, phone only number.
  function validate(e){
 	// Allow: backspace, delete, tab, escape, enter and .
@@ -16,14 +21,25 @@ $(document).ready(function(){
         }
 }
 
+//attach validate to input text boxes:
 $('#zip').keydown(validate);
 $('#phone').keydown(validate);
 $('#isbn-text').keydown(validate);
 
+
+/* Click event for Logout link on the navbar, it should go back to login page */
 $('#logout').click(function(){
 	$(location).attr('href','/login.html');
 });
-/*==================interaction for LOGIN button in login.html====================================*/
+
+/*====================Handling click event for LOGIN button in login.html====================================
+	When userlog in, jquery will check:
+	- if input box is empty, throw an alert.
+	- if input box is filled, check if  username or password exists in database
+			- if not matching in database => throw alert
+			- if everything is good, go to dashboard
+	
+*/
 	$('#login-button').click(function(){
 		if($('#userName').val().length == 0 || $('#userPassword').val().length ==0){
 			alert('Incorrect username or password');
@@ -53,7 +69,11 @@ $('#logout').click(function(){
 		}
 	});
 
-/*==================interaction for REGISTER button in login.html====================================*/
+/*==================Handling click event for REGISTER button in signuppage.html====================================
+	- First check if any fields beside phone, is empty, if there is, throw alert.
+	- If none is empty, check if either username or email exists in database, throw alert if there is.
+	- Once all inputs are good, insert user information into database.
+*/
 $('#registerButton').click(function(){
 	console.log("in here");
  	 		//check if all fields are filled
@@ -124,7 +144,11 @@ $('#registerButton').click(function(){
 	});
 });
 
-/********************************************************interaction for ISBN search buttons in dashboard:***/
+/********************************************************Handling click event for ISBN search buttons in dashboard:
+	Only allow numbers to be typed in.
+	Run a query to check for user input ISBN if it exists in Database.
+	- return results.
+***/
 $('#isbn-search-button').click(function(){
 	var $input = $('#isbn-text').val();
 	if ($input.length ==0){
@@ -156,7 +180,7 @@ $('#isbn-search-button').click(function(){
 		});
 	}
 });
-/********************************************************interaction for AUTHOR search buttons in dashboard:***/
+/********************************************************Handling click event for AUTHOR search buttons in dashboard:***/
 
 $('#author-search-button').click(function(){
 	var $input = $('#author-text').val();
@@ -190,7 +214,7 @@ $('#author-search-button').click(function(){
 		});
 	}
 });
-/********************************************************interaction for TITLE search buttons in dashboard:***/
+/********************************************************Handling click event for TITLE search buttons in dashboard:***/
 $('#title-search-button').click(function(){
 	var $input = $('#title-text').val();
 	if ($input.length ==0){
@@ -226,36 +250,8 @@ $('#title-search-button').click(function(){
 	}
 });
 
-/*********************************** MY RECORD link ************************/
-// $('#record').click(function(){
-// 	//display list of book from mysql here
-// 		//need username to search for record in userbook
-// 	console.log('Test for: '+$username);
-// 	$.ajax({
-// 		headers:{'username':$username},
-// 		url:'http://localhost:8080/record',
-// 		method:'GET',
-// 		contentType:'application/x-www-form-urlencoded; charset=UTF-8',
-// 		dataType:'text',
-// 		processData: false,
-// 		success: function(result){
-// 			console.log(result);
-// 			if(result != 'false'){
-// 				alert('Showing books');
-// 				//alert('books of search result will be displayed: ');
-// 				// $('#searchbox').empty();
-// 				// $('#searchbox').append(result);
-				
-// 			} else {
-// 				// $('#searchbox').empty();
-// 				alert('No result for');
-// 				return;
-// 			}	
-// 		}
-// 	});
 
-// });
-/********************************************DC LIST *****************************************/
+/********************************************Click event for DC Books link *****************************************/
 $('#dclist').click(function(){
 	
 		//display list of book from mysql here
@@ -285,7 +281,7 @@ $('#dclist').click(function(){
 			});
 	
 });
-/********************************************NARVEL LIST **************************************/
+/********************************************MARVEL LIST **************************************/
 $('#marvellist').click(function(){
 	
 		//display list of book from mysql here
@@ -315,7 +311,7 @@ $('#marvellist').click(function(){
 			});
 	
 });
-/****************************************************MANgA********************************************/
+/****************************************************Manga********************************************/
 $('#mangalist').click(function(){
 	
 		//display list of book from mysql here
