@@ -12,12 +12,6 @@ var express = require('express'),
 var app = express();
 
 
-/* mysql credential */
-var DATABASE_URL = 'us-cdbr-iron-east-02.cleardb.net';
-var DATABASE_USERNAME = 'b17bd3ffac20b3';
-var DATABASE_PASSWORD = 'd64c505b20f19d7';
-var DATABASE = 'heroku_a6679b0da499276';
-
 /*these are to load local resources (any file in libclone after '/' such as pictures and main.css
 without them the pictures or css file.*/
 app.use(express.static(__dirname+'/'));
@@ -45,10 +39,10 @@ app.get('/', function(req, res) {
 
 app.get('/login-validate', function(req, res){
     var dbconfig = {
-    host: process.env.DATABASE_URL || 'localhost',
-    user: process.env.DATABASE_USER || 'root',
-    password: process.env.DATABASE_PASSWORD || 'password',
-    database: process.env.DATABASE || 'nguyen_khanh_db'
+    host: process.env.CLEARDB_DATABASE_URL || 'localhost',
+    user: process.env.CLEARDB_USERNAME || 'root',
+    password: process.env.CLEARDB_PASSWORD || 'password',
+    database: process.env.CLEARDB_DATABASE || 'nguyen_khanh_db'
 }
 console.log(dbconfig)
 connection = mysql.createConnection(dbconfig);
