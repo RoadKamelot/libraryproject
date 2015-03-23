@@ -8,7 +8,10 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     _und = require('underscore'),
     cool = require('cool-ascii-faces'),
-    app = express();
+    app = express(),
+    passport = require('passport'),
+    clearDbAccessor = require('./ClearDBAccessor');
+
 var dbconfig = {
     connectionLimit: 100, //important
     debug: false,
@@ -16,8 +19,10 @@ var dbconfig = {
     user: 'b17bd3ffac20b3',
     password: 'd64c505b20f19d7',
     database: 'heroku_a6679b0da499276'
-}
+};
+
 var pool = mysql.createPool(dbconfig);
+
 /*these are to load local resources (any file in libclone after '/' such as pictures and main.css
 without them the pictures or css file.*/
 app.use(express.static(__dirname + '/'));
@@ -26,6 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+
 //to simplify all the processes, allow user to access database
 app.use(function(req, res, next) {
     res.header('Access-Controll-Allow-Origin', '*');
@@ -33,43 +39,26 @@ app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
+
 app.set('port', (process.env.PORT || 8080))
     /*http://codeforgeek.com/2015/01/render-html-file-expressjs/
      Allow server to load html files.
     */
+
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/login.html'));
 });
+
 //connect to my database
 app.get('/login-validate', function(req, res) {
-    pool.getConnection(function(err, connection) {
-        if (err) {
-            connection.release();
-            res.json({
-                "code": 100,
-                "status": "Error in connection database"
-            });
-            return;
-        }
-        connection.query('select username, pw from useraccount', function(err, rows, fields) {
-            connection.release();
-            if (err) {
-                console.log("Fail to query!");
-            } else {
-                var result = 'false';
-                for (var i = 0; i < rows.length; i++) {
-                    // console.log('From jquery: '+req.headers.username);
-                    // console.log('From database: '+rows[i].username);
-                    if ((rows[i].username == req.headers.username) &&
-                        (rows[i].pw == req.headers.password)) {
-                        result = 'true';
-                    }
-                }
-                res.send(result);
-            }
-        });
+    var username = req.headers.username,
+        password = req.headers.password;
+
+    clearDbAccessor.findMatchingUsernameAndPassword(username, password, function(result) {
+        return result ? res.send(true): res.send(false);
     });
 });
+
 /*============================== Register button ===============
         This will do the check with database and insert information */
 app.post('/register', function(req, res) {
@@ -94,16 +83,20 @@ app.post('/register', function(req, res) {
             });
             return;
         }
-        connection.query('select Username, Email from userinfo', function(err, rows, fields) {
-            for (var value in rows) {
-                var isDuplicate = rows[value].Username == req.body.username || rows[value].Email == req.body.email;
+        connection.query('select Username, Email from userinfo', function(err, dbResult, fields) {
+            _und.find(dbResult, function(row) {
+                return row.user
+            });
+
+            for (var value in dbResult) {
+                var isDuplicate = dbResult[value].Username == req.body.username || dbResult[value].Email == req.body.email;
                 if (isDuplicate) {
                     result = false;
-                    return res.send("Fail to register because of duplicated userinfo");;
+                    return res.send("Duplicated user info");
                 }
 
             };
-            connection.query('insert into userinfo set ?', post, function(err, rows, fields) {
+            connection.query('insert into userinfo set ?', post, function(err, dbResult, fields) {
                 console.log('err: ' + err);
                 if (err) {
                     return res.send(false);
