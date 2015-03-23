@@ -85,18 +85,12 @@ app.post('/register', function(req, res) {
             return;
         }
         connection.query('select Username, Email from userinfo', function(err, dbResult, fields) {
-            _und.find(dbResult, function(row) {
-                return row.user
+            var result = _und.find(dbResult, function(row) {
+                return row.username == username || row.Email == email;
             });
 
-            for (var value in dbResult) {
-                var isDuplicate = dbResult[value].Username == req.body.username || dbResult[value].Email == req.body.email;
-                if (isDuplicate) {
-                    result = false;
-                    return res.send("Duplicated user info");
-                }
+            if (result) return res.send('Duplicated user info');
 
-            };
             connection.query('insert into userinfo set ?', post, function(err, dbResult, fields) {
                 console.log('err: ' + err);
                 if (err) {
@@ -117,6 +111,7 @@ app.get('/isbn-search', function(req, res) {
         return result ? res.send(result) : res.send(false);
     });
 });
+
 /********************************************************** AUTHOR Search button ******************************************
                         Query information from database and return result to jquery to display*/
 app.get('/author-search', function(req, res) {
