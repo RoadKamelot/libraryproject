@@ -131,7 +131,7 @@ $('#registerButton').click(function(){
 	        	//once everything satisfied, insert all info into database and move to dashboard
 		 		alert( "Welcome to the mini library, where you can find your favorite comic books !" );
 		 		$(location).attr('href','/dashboard.html');
-	        } else{
+	        } else {
 	        	alert(data);
 	        	alert("Username or email already exist. Please choose a different username or email address.");
 	        	return;

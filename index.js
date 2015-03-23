@@ -49,11 +49,11 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/login.html'));
 });
 
-//connect to my database
 app.get('/login-validate', function(req, res) {
     var username = req.headers.username,
         password = req.headers.password;
 
+    //connect to clearDB
     clearDbAccessor.findMatchingUsernameAndPassword(username, password, function(result) {
         return result ? res.send(true): res.send(false);
     });
@@ -74,6 +74,7 @@ app.post('/register', function(req, res) {
         Zipcode: req.body.zip,
         Phone: req.body.phone
     };
+
     pool.getConnection(function(err, connection) {
         if (err) {
             connection.release();
@@ -106,34 +107,12 @@ app.post('/register', function(req, res) {
         });
     });
 });
+
 /********************************************************** ISBN Search button ******************************************
                                         Query information from database and return result to jquery to display*/
 app.get('/isbn-search', function(req, res) {
-    pool.getConnection(function(err, connection) {
-        if (err) {
-            connection.release();
-            res.json({
-                "code": 100,
-                "status": "Error in connection database"
-            });
-            return;
-        }
-        connection.query('select ISBN, Title, Author, Category from bookinfo', function(err, rows, fields) {
-            if (err) {
-                console.log("Fail to query!");
-            } else {
-                for (var value in rows) {
-                    if (req.headers.isbn == rows[value].ISBN) {
-                        var isbn = rows[value].ISBN;
-                        var author = rows[value].Author;
-                        var title = rows[value].Title;
-                        var category = rows[value].Category;
-                        return res.send('<div class="container searchbox-div"><div><strong>' + isbn + '</strong></div><div>' + author + '</div><div>' + title + '</div><div> ' + category + '</div></div>');
-                    }
-                }
-                res.send(false);
-            }
-        });
+    clearDbAccessor.findMatchingISBN(req.headers.isbn, function(result) {
+        return result ? res.send(result) : res.send(false);
     });
 });
 /********************************************************** AUTHOR Search button ******************************************
@@ -259,6 +238,7 @@ app.get('/dc', function(req, res) {
         });
     });
 });
+
 /********************************************** MARVEL category link ******************************************************
                                                     Query information from database and return result to jquery to display*/
 app.get('/marvel', function(req, res) {
@@ -297,6 +277,7 @@ app.get('/marvel', function(req, res) {
         });
     });
 });
+
 /*************************************************MANGA *******************************************************
                                     Query information from database and return result to jquery to display*/
 app.get('/manga', function(req, res) {
@@ -335,6 +316,7 @@ app.get('/manga', function(req, res) {
         });
     });
 });
+
 app.listen(app.get('port'), function() {
     console.log("Node app is running at localhost:" + app.get('port'))
 });

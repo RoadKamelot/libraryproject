@@ -12,7 +12,7 @@ var dbconfig = {
 
 var pool = mysql.createPool(dbconfig);
 
-function _findMatchingUsernameAndPassword(username_input, password_input, callback) {
+function _findMatchingUsernameAndPassword(username, password, callback) {
 	pool.getConnection(function(err, connection) {
 		checkSQLConnection(err, connection);
 	    connection.query('select username, pw from useraccount', function(err, dbResult) {
@@ -21,11 +21,45 @@ function _findMatchingUsernameAndPassword(username_input, password_input, callba
 	            return err;
 	        } else {
 	            var result = _und.find(dbResult, function(row) {
-	                return row.username == username_input && row.pw == password_input;
+	                return row.username == username && row.pw == password;
 	            });
                 callback(result);
 	        }
 	    });
+	});
+}
+
+function _findMatchingUsernameOrEmail(username, email, callback) {
+	pool.getConnection(function(err, connection) {
+		checkSQLConnection(err, connection);
+	    connection.query('select Username, Email from userinfo', function(err, dbResult) {
+	        connection.release();
+	        if (err) {
+	            return err;
+	        } else {
+	            var result = _und.find(dbResult, function(row) {
+	                return row.username == username || row.Email == email;
+	            });
+                callback(result);
+	        }
+	    });
+	});
+}
+
+function _findMatchingISBN(isbn, callback) {
+	pool.getConnection(function(err, connection) {
+		checkSQLConnection(err, connection);
+		connection.query('select ISBN, Title, Author, Category from bookinfo', function(err, dbResult) {
+			if (err) {
+                return res.send(err);
+            } else {
+                var result = _und.find(dbResult, function(row) {
+                	return row.ISBN == isbn; //isbn == req.headers.isbn
+                });
+                var template = '<div class="container searchbox-div"><div><strong>' + result.isbn + '</strong></div><div>' + result.author + '</div><div>' + result.title + '</div><div> ' + result.category + '</div></div>';
+                callback(result);
+            }
+		});
 	});
 }
 
@@ -41,5 +75,6 @@ function checkSQLConnection(err, connection) {
 }
 
 module.exports = {
-	findMatchingUsernameAndPassword : _findMatchingUsernameAndPassword
+	findMatchingUsernameAndPassword : _findMatchingUsernameAndPassword,
+	findMatchingISBN : _findMatchingISBN
 };
