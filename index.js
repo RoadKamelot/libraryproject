@@ -101,6 +101,7 @@ app.post('/register', function(req, res) {
                     result = false;
                     return res.send("Fail to register because of duplicated userinfo");;
                 }
+
             };
             connection.query('insert into userinfo set ?', post, function(err, rows, fields) {
                 console.log('err: ' + err);
@@ -110,6 +111,7 @@ app.post('/register', function(req, res) {
                     return res.send("User successfully registered!");
                 }
             });
+            
         });
     });
 });
