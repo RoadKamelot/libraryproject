@@ -95,6 +95,7 @@ app.post('/register', function(req, res) {
                     result = false;
                     return res.send("Duplicated user info");
                 }
+
             };
             connection.query('insert into userinfo set ?', post, function(err, dbResult, fields) {
                 console.log('err: ' + err);
@@ -104,6 +105,7 @@ app.post('/register', function(req, res) {
                     return res.send("User successfully registered!");
                 }
             });
+            
         });
     });
 });
