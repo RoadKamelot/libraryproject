@@ -66,6 +66,7 @@ app.post('/register', function(req, res) {
     //post is the package information user type in, to be added to table:
     var post = {
         Username: req.body.username,
+        Pw: req.body.password,
         Lname: req.body.lastName,
         Fname: req.body.firstName,
         Addr: req.body.street,
@@ -85,7 +86,7 @@ app.post('/register', function(req, res) {
         }
         connection.query('select Username, Email from userinfo', function(err, dbResult, fields) {
             _und.find(dbResult, function(row) {
-                return row.user
+                return row.user;
             });
 
             for (var value in dbResult) {
@@ -96,7 +97,7 @@ app.post('/register', function(req, res) {
                 }
 
             };
-            connection.query('insert into userinfo set ?', post, function(err, dbResult, fields) {
+connection.query('', function(err, dbResult, fields) {
                 console.log('err: ' + err);
                 if (err) {
                     return res.send(false);
@@ -104,6 +105,15 @@ app.post('/register', function(req, res) {
                     return res.send("User successfully registered!");
                 }
             });
+            //inner join userinfo with useraccount where userNo = userNo, then insert.
+            // connection.query('insert into userinfo set ?', post, function(err, dbResult, fields) {
+            //     console.log('err: ' + err);
+            //     if (err) {
+            //         return res.send(false);
+            //     } else {
+            //         return res.send("User successfully registered!");
+            //     }
+            // });
             
         });
     });
