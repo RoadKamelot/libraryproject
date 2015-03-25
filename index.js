@@ -86,30 +86,12 @@ app.post('/register', function(req, res) {
             return;
         }
         connection.query('select Username, Email from userinfo', function(err, dbResult, fields) {
-<<<<<<< HEAD
-            _und.find(dbResult, function(row) {
-                return row.user;
-=======
             var result = _und.find(dbResult, function(row) {
                 return row.username == username || row.Email == email;
->>>>>>> 91253d03fe6a8b05158ba762e16d156f06d6484a
-            });
 
             if (result) return res.send('Duplicated user info');
 
-<<<<<<< HEAD
-            };
-connection.query('', function(err, dbResult, fields) {
-=======
-            connection.query('insert into userinfo set ?', post, function(err, dbResult, fields) {
->>>>>>> 91253d03fe6a8b05158ba762e16d156f06d6484a
-                console.log('err: ' + err);
-                if (err) {
-                    return res.send(false);
-                } else {
-                    return res.send("User successfully registered!");
-                }
-            });
+   
             //inner join userinfo with useraccount where userNo = userNo, then insert.
             // connection.query('insert into userinfo set ?', post, function(err, dbResult, fields) {
             //     console.log('err: ' + err);
