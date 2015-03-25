@@ -54,7 +54,8 @@ app.get('/login-validate', function(req, res) {
         password = req.headers.password;
 
     //connect to clearDB
-    clearDbAccessor.findMatchingUsernameAndPassword(username, password, function(result) {
+    clearDbAccessor.findMatchingUsernameAndPassword(username, password, function(err, result) {
+        console.log('result: ' + result);
         return result ? res.send(true): res.send(false);
     });
 });
@@ -62,47 +63,29 @@ app.get('/login-validate', function(req, res) {
 /*============================== Register button ===============
         This will do the check with database and insert information */
 app.post('/register', function(req, res) {
-    var result = true;
+    // var result = true;
     //post is the package information user type in, to be added to table:
     var post = {
-        Username: req.body.username,
-        Pw: req.body.password,
-        Lname: req.body.lastName,
-        Fname: req.body.firstName,
-        Addr: req.body.street,
-        Email: req.body.email,
-        City: req.body.city,
-        Zipcode: req.body.zip,
-        Phone: req.body.phone
+
+        'Username': req.body.username,
+        'Lname': req.body.lastName,
+        'Fname': req.body.firstName,
+        'Addr': req.body.street,
+        'Email': req.body.email,
+        'City': req.body.city,
+        'Zipcode': req.body.zip,
+        'Phone': req.body.phone,
+        'Password': req.body.password
     };
 
-    pool.getConnection(function(err, connection) {
+    clearDbAccessor.registerAndValidateUser(post, function(err, result) {
+        console.log('err: ' + err);
+        console.log('err: ' + JSON.stringify(err));
         if (err) {
-            connection.release();
-            res.json({
-                "code": 100,
-                "status": "Error in connection database"
-            });
-            return;
+            return res.status(400).send({ error: err.message });
+        } else {
+            return res.send(result);
         }
-        connection.query('select Username, Email from userinfo', function(err, dbResult, fields) {
-            var result = _und.find(dbResult, function(row) {
-                return row.username == username || row.Email == email;
-
-            if (result) return res.send('Duplicated user info');
-
-   
-            //inner join userinfo with useraccount where userNo = userNo, then insert.
-            // connection.query('insert into userinfo set ?', post, function(err, dbResult, fields) {
-            //     console.log('err: ' + err);
-            //     if (err) {
-            //         return res.send(false);
-            //     } else {
-            //         return res.send("User successfully registered!");
-            //     }
-            // });
-            
-        });
     });
 });
 

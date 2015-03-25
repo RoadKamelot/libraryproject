@@ -126,20 +126,14 @@ $('#registerButton').click(function(){
 	    // processData: false,
 	    success: function(data, textStatus, jqXHR)
 	    {
-	        console.log(data);
-	        if(data=='User successfully registered!'){
-	        	//once everything satisfied, insert all info into database and move to dashboard
-		 		alert( "Welcome to the mini library, where you can find your favorite comic books !" );
-		 		$(location).attr('href','/dashboard.html');
-	        } else {
-	        	alert(data);
-	        	alert("Username or email already exist. Please choose a different username or email address.");
-	        	return;
-	        }
+        	//once everything satisfied, insert all info into database and move to dashboard
+	 		alert( "Welcome to the mini library, where you can find your favorite comic books!" );
+	 		$(location).attr('href','/dashboard.html');
 	    },
 	    error: function (jqXHR, textStatus, errorThrown)
 	    {
-	 		console.log('errorThrown: ' + errorThrown);
+	    	console.log('errorThrown: ' + errorThrown);
+	 		alert(errorThrown);
 	    }
 	});
 });
