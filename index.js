@@ -66,7 +66,6 @@ app.post('/register', function(req, res) {
     // var result = true;
     //post is the package information user type in, to be added to table:
     var post = {
-
         'Username': req.body.username,
         'Lname': req.body.lastName,
         'Fname': req.body.firstName,
