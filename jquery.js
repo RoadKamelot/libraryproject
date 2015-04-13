@@ -163,7 +163,9 @@ $('#isbn-search-button').click(function(){
 				if(result != 'false'){
 					//alert('books of search result will be displayed: ');
 					$('#searchbox').empty();
-					$('#searchbox').append(result);
+
+					$('#searchbox').append("<div class='container searchbox-div'><div>" + JSON.parse(result).ISBN + "</div><div><strong>" + JSON.parse(result).Author + "</strong></div><div>" + JSON.parse(result).Title + "</div><div>" + JSON.parse(result).Category + "</div></div>");
+					// $('#searchbox').append(result);
 					
 				} else {
 					$('#searchbox').empty();
