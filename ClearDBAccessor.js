@@ -83,12 +83,12 @@ function _findMatchingISBN(isbn, callback) {
 		checkSQLConnection(err, connection);
 		connection.query('select ISBN, Title, Author, Category from bookinfo', function(err, dbResult) {
 			if (err) {
-                return res.send(err);
+                return callback(err, null);
             } else {
                 var result = _und.find(dbResult, function(row) {
                 	return row.ISBN == isbn; //isbn == req.headers.isbn
                 });
-                callback(result);
+                callback(null, result);
             }
 		});
 	});
