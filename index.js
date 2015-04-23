@@ -91,8 +91,8 @@ app.post('/register', function(req, res) {
 /********************************************************** ISBN Search button ******************************************
                                         Query information from database and return result to jquery to display*/
 app.get('/isbn-search', function(req, res) {
-    clearDbAccessor.findMatchingISBN(req.headers.isbn, function(result) {
-        return result ? res.send(result) : res.send(false);
+    clearDbAccessor.findMatchingISBN(req.headers.isbn, function(err, result) {
+        return result ? res.send(result) : res.send(err);
     });
 });
 
@@ -111,6 +111,7 @@ app.get('/author-search', function(req, res) {
         connection.query('select ISBN, Author, Title, Category from bookinfo where Author like ?', '%' + req.headers.author + '%', function(err, rows, fields) {
             if (err) {
                 console.log(err);
+                res.send(err);
             } else {
                 var result = false,
                     resultList = [];
@@ -151,9 +152,10 @@ app.get('/title-search', function(req, res) {
             });
             return;
         }
-        connection.query('select ISBN, Author, Title, Category from bookinfo where Title like ?', '%' + req.headers.title + '%', function(err, rows, fields) {
-            if (err) {
-                console.log(err);
+        connection.query('select ISBN, Author, Title, Category from bookinfo where Title like ?', '%' + req.headers.title + '%', function(queryError, rows, fields) {
+            if (queryError) {
+                // res.send(err);
+                res.status(400).send('ClearDB responded with an error:', queryError);
             } else {
                 var result = false,
                     resultList = [];
