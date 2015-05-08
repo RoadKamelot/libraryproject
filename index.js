@@ -2,7 +2,8 @@
 Khanh Nguyen
 This javascript file has plug-in installations, connect to mysql, query information that was passing from jquery.
 */
-var express = require('express'),
+var newrelic = require('newrelic'),
+    express = require('express'),
     mysql = require('mysql'),
     path = require('path'),
     bodyParser = require('body-parser'),
