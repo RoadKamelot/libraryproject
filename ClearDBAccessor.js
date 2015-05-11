@@ -4,10 +4,10 @@ var _und = require('underscore'),
 var dbconfig = {
     connectionLimit: 100, //important
     debug: false,
-    host: 'us-cdbr-iron-east-02.cleardb.net',
-    user: 'b17bd3ffac20b3',
-    password: 'd64c505b20f19d7',
-    database: 'heroku_a6679b0da499276'
+    host: process.env.CLEARDB_DATABASE_URL || 'localhost',
+	user: process.env.CLEARDB_USERNAME || 'root',
+	password: process.env.CLEARDB_PASSWORD || 'password',
+	database: process.env.CLEARDB_DATABASE || 'nguyen_khanh_db'
 };
 
 var pool = mysql.createPool(dbconfig);
