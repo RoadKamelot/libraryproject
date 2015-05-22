@@ -2,8 +2,7 @@
 Khanh Nguyen
 This javascript file has plug-in installations, connect to mysql, query information that was passing from jquery.
 */
-var newrelic = require('newrelic'),
-    express = require('express'),
+var express = require('express'),
     mysql = require('mysql'),
     path = require('path'),
     bodyParser = require('body-parser'),
@@ -15,10 +14,10 @@ var newrelic = require('newrelic'),
 var dbconfig = {
     connectionLimit: 100, //important
     debug: false,
-    host: process.env.CLEARDB_DATABASE_URL || 'localhost',
-    user: process.env.CLEARDB_USERNAME || 'root',
-    password: process.env.CLEARDB_PASSWORD || 'password',
-    database: process.env.CLEARDB_DATABASE || 'nguyen_khanh_db'
+    host: process.env.CLEARDB_DATABASE_URL,
+    user: process.env.CLEARDB_USERNAME,
+    password: process.env.CLEARDB_PASSWORD,
+    database: process.env.CLEARDB_DATABASE
 };
 
 var pool = mysql.createPool(dbconfig);

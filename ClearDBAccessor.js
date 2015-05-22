@@ -4,10 +4,10 @@ var _und = require('underscore'),
 var dbconfig = {
     connectionLimit: 100, //important
     debug: false,
-    host: process.env.CLEARDB_DATABASE_URL || 'localhost',
-	user: process.env.CLEARDB_USERNAME || 'root',
-	password: process.env.CLEARDB_PASSWORD || 'password',
-	database: process.env.CLEARDB_DATABASE || 'nguyen_khanh_db'
+    host: process.env.CLEARDB_DATABASE_URL,
+	user: process.env.CLEARDB_USERNAME,
+	password: process.env.CLEARDB_PASSWORD,
+	database: process.env.CLEARDB_DATABASE
 };
 
 var pool = mysql.createPool(dbconfig);
